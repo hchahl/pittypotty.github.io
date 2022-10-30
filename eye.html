@@ -1,0 +1,95 @@
+<HEAD>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script>
+	<SCRIPT SRC="https://cdn.jsdelivr.net/npm/ganja.js"></SCRIPT>
+</HEAD>
+
+
+<BODY>
+  <SCRIPT>
+let cx, cy;
+let secondsRadius;
+let minutesRadius;
+let hoursRadius;
+let clockDiameter;
+
+function setup() {
+  createCanvas(screen.width, screen.height);
+  frameRate(4)
+  //stroke(255);
+
+  let radius = min(width, height) / 2;
+  secondsRadius = radius * 0.71;
+  minutesRadius = radius * 0.6;
+  hoursRadius = radius * 0.5;
+  clockDiameter = radius * 1.7;
+
+  cx = width / 2;
+  cy = height / 2;
+}
+
+
+  let prx = cx;
+  let pry = cy;
+
+
+
+function draw() {
+  background(0);
+  // Draw the clock background
+  noStroke();
+  fill(17,60,128);
+  ellipse(cx, cy, clockDiameter + 25, clockDiameter + 25);
+  fill(3,32,79);
+  ellipse(cx, cy, clockDiameter, clockDiameter);
+
+
+  let s = map(round(random(-0.4999, 12.4999)), 0, 12, 0, TWO_PI) - HALF_PI;
+	//console.log("r = ",round(random(-0.4999, 12.4999)));
+
+  stroke(6,156,46);
+  fill(5, 179, 52);
+  
+  let px = cx+cos(s)*secondsRadius
+  let py = cy+sin(s)*secondsRadius
+
+  //line(cx, cy, cx + cos(s) * secondsRadius, cy + sin(s) * secondsRadius);
+  circle(px,py,30)
+
+
+
+	noFill();
+	stroke(116, 8, 133);
+	strokeWeight(1.5);
+	beginShape();
+	curveVertex(px,py);
+	curveVertex(px,py);
+	
+	curveVertex((cx+px+prx)/3,(cy+py+pry)/3);
+	
+	curveVertex(prx, pry);
+	curveVertex(prx, pry);
+	endShape();
+
+	console.log(px,prx,cx)
+
+
+	prx=px;
+	pry=py;
+	
+
+  stroke(6,156,46);
+  fill(5, 179, 52);
+
+  strokeWeight(3);
+  beginShape(POINTS);
+  for (let a = 0; a < 360; a += 30) {
+    let angle = radians(a);
+    let x = cx + cos(angle) * secondsRadius;
+    let y = cy + sin(angle) * secondsRadius;
+    vertex(x, y);
+  }
+  endShape();
+}
+
+  </SCRIPT>
+</BODY>
